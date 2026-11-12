@@ -44,6 +44,15 @@
   color: var(--color-sazon-marfil);
 }
 
+.nutricion-perfil-chip:active {
+  transform: scale(0.97);
+}
+
+.nutricion-perfil-chip:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
 /* Fin 3 */
 
 /* 4 - Jose David Correa Builes: Filtros por restricción (.nutricion-filtro-*) */
