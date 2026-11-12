@@ -1,3 +1,4 @@
+import TablaNutricional from './TablaNutricional';
 // Página Nutrición y Perfiles (Célula 4)
 // Cada persona trabaja solo dentro de su bloque numerado.
 import FiltrosRestriccion from './FiltrosRestriccion'
@@ -21,6 +22,7 @@ function Nutricion() {
           HU 4.1.3 Semilla de datos nutricionales (feature/nutricion/G4-TAB-F03-semilla) */}
       <article id="nutricion-tabla">
         <h2>Tabla nutricional por porción</h2>
+          <TablaNutricional />
       </article>
       {/* Fin 1 */}
 
