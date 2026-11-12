@@ -1,0 +1,149 @@
+/* Estilos de la página Nutrición y Perfiles (Célula 4) */
+/* Cada persona escribe solo dentro de su sección, con clases .nutricion-* */
+/* y colores de las variables --color-sazon-* definidas en index.css. */
+
+/* 1 - Santiago Padilla: Tabla nutricional (.nutricion-tabla) */
+
+/* Fin 1 */
+
+/* 2 - Juan Camilo Valencia Estrada: Semáforo y avisos (.nutricion-semaforo-*, .nutricion-aviso-card) */
+
+/* Fin 2 */
+
+/* 3 - José Manuel Botero Giraldo: Perfil alimentario (.nutricion-perfil-*) */
+.nutricion-perfil-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nutricion-perfil-chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-sazon-verdeHoja);
+  background: transparent;
+  color: var(--color-sazon-verdeHondo);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.nutricion-perfil-chip:hover {
+  background: var(--color-sazon-marfil);
+}
+
+.nutricion-perfil-chip:focus-visible {
+  outline: 2px solid var(--color-sazon-verdeNeon);
+  outline-offset: 2px;
+}
+
+.nutricion-perfil-chip--activo {
+  background: var(--color-sazon-verdeHoja);
+  color: var(--color-sazon-marfil);
+}
+
+.nutricion-perfil-chip:active {
+  transform: scale(0.97);
+}
+
+.nutricion-perfil-chip:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.nutricion-perfil-form {
+  display: grid;
+  gap: 1rem;
+  max-width: 32rem;
+  margin-top: 1.5rem;
+}
+
+.nutricion-perfil-form-grupo {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem;
+  border: 1px solid var(--color-sazon-verdeHoja);
+  border-radius: 0.75rem;
+}
+
+.nutricion-perfil-form-grupo legend {
+  padding: 0 0.4rem;
+  font-weight: 600;
+  color: var(--color-sazon-verdeHondo);
+}
+
+.nutricion-perfil-form-grupo label {
+  font-size: 0.875rem;
+  color: var(--color-sazon-texto);
+}
+
+.nutricion-perfil-form-grupo input,
+.nutricion-perfil-form-grupo textarea {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-sazon-texto2);
+  border-radius: 0.5rem;
+  font: inherit;
+}
+
+.nutricion-perfil-form-grupo input:focus-visible,
+.nutricion-perfil-form-grupo textarea:focus-visible {
+  outline: 2px solid var(--color-sazon-verdeNeon);
+  outline-offset: 1px;
+}
+
+.nutricion-perfil-form-grupo input:invalid {
+  border-color: var(--color-sazon-brandZenu);
+}
+
+.nutricion-perfil-form-boton {
+  justify-self: start;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-sazon-verdeHoja);
+  color: var(--color-sazon-marfil);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nutricion-perfil-form-boton:hover {
+  background: var(--color-sazon-verdeHondo);
+}
+
+.nutricion-perfil-form-boton:focus-visible {
+  outline: 2px solid var(--color-sazon-verdeNeon);
+  outline-offset: 2px;
+}
+
+.nutricion-perfil-form-boton:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.nutricion-perfil-aviso {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.5rem;
+}
+
+.nutricion-perfil-aviso--exito {
+  background: var(--color-sazon-marfil);
+  color: var(--color-sazon-verdeHondo);
+}
+
+.nutricion-perfil-aviso--error {
+  background: var(--color-sazon-marfil);
+  color: var(--color-sazon-brandZenu);
+}
+
+/* Fin 3 */
+
+/* 4 - Jose David Correa Builes: Filtros por restricción (.nutricion-filtro-*) */
+
+/* Fin 4 */
+
+/* 5 - José David Valencia Martínez: Metas diarias (.nutricion-meta-*) */
+
+/* Fin 5 */
