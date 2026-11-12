@@ -1,6 +1,9 @@
 // Página Nutrición y Perfiles (Célula 4)
 // Cada persona trabaja solo dentro de su bloque numerado.
 
+import NutricionSemaforo from "./NutricionSemaforo";
+import { datosNutricionalesEjemplo } from "./datosNutricionales";
+
 function Nutricion() {
   return (
     <section className="space-y-8">
@@ -22,7 +25,11 @@ function Nutricion() {
           HU 4.2.2 Panel de recomendaciones "Revisa" (feature/nutricion/G4-SEM-F02-recomendacion)
           HU 4.2.3 Sincronización con el perfil activo (feature/nutricion/G4-SEM-F03-sincronizar) */}
       <article id="nutricion-semaforo">
-        <h2>Semáforo de aplllllllllortes</h2>
+        <h2>Semáforo de aportes</h2>
+        <NutricionSemaforo
+          plato={datosNutricionalesEjemplo.plato}
+          totales={datosNutricionalesEjemplo.totales}
+        />
       </article>
       {/* Fin 2 */}
 
