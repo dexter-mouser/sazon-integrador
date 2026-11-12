@@ -15,7 +15,8 @@ function Nutricion() {
           HU 4.1.2 Formateo de valores y unidades (feature/nutricion/G4-TAB-F02-formato)
           HU 4.1.3 Semilla de datos nutricionales (feature/nutricion/G4-TAB-F03-semilla) */}
       <article id="nutricion-tabla">
-        <TablaNutricional />
+        <h2>Tabla nutricional por porción</h2>
+          <TablaNutricional />
       </article>
       {/* Fin 1 */}
 
