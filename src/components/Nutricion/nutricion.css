@@ -11,6 +11,38 @@
 /* Fin 2 */
 
 /* 3 - José Manuel Botero Giraldo: Perfil alimentario (.nutricion-perfil-*) */
+.nutricion-perfil-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nutricion-perfil-chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-sazon-verdeHoja);
+  background: transparent;
+  color: var(--color-sazon-verdeHondo);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.nutricion-perfil-chip:hover {
+  background: var(--color-sazon-marfil);
+}
+
+.nutricion-perfil-chip:focus-visible {
+  outline: 2px solid var(--color-sazon-verdeNeon);
+  outline-offset: 2px;
+}
+
+.nutricion-perfil-chip--activo {
+  background: var(--color-sazon-verdeHoja);
+  color: var(--color-sazon-marfil);
+}
 
 /* Fin 3 */
 
