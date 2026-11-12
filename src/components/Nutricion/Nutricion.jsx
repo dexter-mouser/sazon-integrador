@@ -1,6 +1,7 @@
 // Página Nutrición y Perfiles (Célula 4)
 // Cada persona trabaja solo dentro de su bloque numerado.
 import './nutricion.css'
+import NutricionPerfil from './NutricionPerfil'
 
 function Nutricion() {
   return (
@@ -33,6 +34,7 @@ function Nutricion() {
           HU 4.3.3 Formulario de configuración avanzada (feature/nutricion/G4-PER-F03-formulario) */}
       <article id="nutricion-perfil">
         <h2>Perfil alimentario</h2>
+        <NutricionPerfil />
       </article>
       {/* Fin 3 */}
 
