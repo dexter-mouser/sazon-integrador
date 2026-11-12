@@ -1,0 +1,112 @@
+/* ================================
+   MODO CLARO
+================================ */
+
+.nutricion-semaforo {
+  color: #26332c;
+  background: #f4f4e8;
+  border: 1px solid #d5dfd5;
+  border-radius: 1rem;
+}
+
+.nutricion-semaforo__encabezado {
+  color: #1b4332;
+}
+
+.nutricion-semaforo__indicador {
+  background: #ffffff;
+  color: #26332c;
+  border: 1px solid #cbd5ce;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.nutricion-semaforo-alerta {
+  border-left: 5px solid #b45309;
+  background: #fff7ed;
+}
+
+.nutricion-semaforo-ok {
+  border-left: 5px solid #27803b;
+  background: #edf7ee;
+}
+
+.nutricion-semaforo__estado {
+  color: #854d0e;
+  font-weight: 700;
+}
+
+.nutricion-semaforo-ok .nutricion-semaforo__estado {
+  color: #216b32;
+}
+
+.nutricion-semaforo__punto {
+  display: inline-block;
+  width: .7rem;
+  height: .7rem;
+  border-radius: 9999px;
+  margin-right: .45rem;
+  background: currentColor;
+}
+
+.nutricion-semaforo-alerta .nutricion-semaforo__punto {
+  background: #b45309;
+}
+
+.nutricion-semaforo-ok .nutricion-semaforo__punto {
+  background: #27803b;
+}
+
+.nutricion-semaforo__ayuda {
+  color: #475569;
+}
+
+/* ================================
+   MODO OSCURO
+================================ */
+
+.dark .nutricion-semaforo {
+  color: #f4f4e8;
+  background: #123b2c;
+  border-color: #276047;
+}
+
+.dark .nutricion-semaforo__encabezado {
+  color: #f4f4e8;
+}
+
+.dark .nutricion-semaforo__indicador {
+  color: #f4f4e8;
+  background: #194936;
+  border-color: #326b50;
+}
+
+.dark .nutricion-semaforo-alerta {
+  background: rgba(180, 83, 9, .18);
+  border-left-color: #e5a04b;
+}
+
+.dark .nutricion-semaforo-ok {
+  background: rgba(61, 142, 51, .18);
+  border-left-color: #66d149;
+}
+
+.dark .nutricion-semaforo__estado {
+  color: #f5c078;
+}
+
+.dark .nutricion-semaforo-ok .nutricion-semaforo__estado {
+  color: #8ee879;
+}
+
+.dark .nutricion-semaforo-alerta .nutricion-semaforo__punto {
+  background: #e5a04b;
+}
+
+.dark .nutricion-semaforo-ok .nutricion-semaforo__punto {
+  background: #66d149;
+}
+
+.dark .nutricion-semaforo__ayuda {
+  color: #d1ddd5;
+}
