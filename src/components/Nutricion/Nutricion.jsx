@@ -1,4 +1,6 @@
-
+// Página Nutrición y Perfiles (Célula 4)
+// Cada persona trabaja solo dentro de su bloque numerado.
+import FiltrosRestriccion from './FiltrosRestriccion'
 import './nutricion.css'
 import NutricionPerfil from './NutricionPerfil'
 import NutricionPerfilFormulario from './NutricionPerfilFormulario'
@@ -56,6 +58,7 @@ function Nutricion() {
           HU 4.4.3 Validación cruzada de ingredientes (feature/nutricion/G4-FIL-F03-validacion-cruzada) */}
       <article id="nutricion-filtros">
         <h2>Filtros por restricción</h2>
+        <FiltrosRestriccion />
       </article>
       {/* Fin 4 */}
 
