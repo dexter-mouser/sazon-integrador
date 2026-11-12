@@ -1,0 +1,145 @@
+/* HU 4.2.2 - Panel de recomendaciones y avisos */
+
+.nutricion-aviso-panel {
+  color: #26332c;
+}
+
+.nutricion-aviso-panel__encabezado {
+  color: #1b4332;
+}
+
+.nutricion-aviso-panel__descripcion {
+  color: #5b5e60;
+}
+
+.nutricion-aviso-panel__vacio {
+  color: #475569;
+  background: #f8faf7;
+  border: 1px solid #d5dfd5;
+}
+
+.nutricion-aviso-card {
+  border: 1px solid #e4c69f;
+  border-left: 5px solid #b45309;
+  border-radius: 1rem;
+  padding: 1rem;
+  background: #fff7ed;
+  color: #422d1c;
+  box-shadow: 0 2px 8px rgba(27, 67, 50, 0.06);
+}
+
+.nutricion-aviso-card__contenido {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.nutricion-aviso-card__icono {
+  display: inline-flex;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #ffedd5;
+  color: #9a3412;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.nutricion-aviso-card__titulo {
+  color: #78350f;
+}
+
+.nutricion-aviso-card__mensaje {
+  color: #422d1c;
+  line-height: 1.55;
+}
+
+.nutricion-aviso-card__sugerencia {
+  color: #36513c;
+  line-height: 1.55;
+}
+
+.nutricion-aviso-card--informacion {
+  border-color: #b8d5e8;
+  border-left-color: #2875a5;
+  background: #eff8ff;
+  color: #17364b;
+}
+
+.nutricion-aviso-card--informacion .nutricion-aviso-card__icono {
+  background: #dbeefe;
+  color: #175985;
+}
+
+.nutricion-aviso-card--informacion .nutricion-aviso-card__titulo {
+  color: #174c70;
+}
+
+.nutricion-aviso-card--informacion .nutricion-aviso-card__mensaje,
+.nutricion-aviso-card--informacion .nutricion-aviso-card__sugerencia {
+  color: #23465d;
+}
+
+/* Modo oscuro */
+.dark .nutricion-aviso-panel {
+  color: #f4f4e8;
+}
+
+.dark .nutricion-aviso-panel__encabezado {
+  color: #f4f4e8;
+}
+
+.dark .nutricion-aviso-panel__descripcion {
+  color: #d1ddd5;
+}
+
+.dark .nutricion-aviso-panel__vacio {
+  color: #e2e8f0;
+  background: #194936;
+  border-color: #326b50;
+}
+
+.dark .nutricion-aviso-card {
+  border-color: #8a633f;
+  border-left-color: #e5a04b;
+  background: #3b3025;
+  color: #f8ead8;
+}
+
+.dark .nutricion-aviso-card__icono {
+  background: #654321;
+  color: #ffe0ad;
+}
+
+.dark .nutricion-aviso-card__titulo {
+  color: #ffdda8;
+}
+
+.dark .nutricion-aviso-card__mensaje {
+  color: #f8ead8;
+}
+
+.dark .nutricion-aviso-card__sugerencia {
+  color: #d8edcf;
+}
+
+.dark .nutricion-aviso-card--informacion {
+  border-color: #39779a;
+  border-left-color: #69b9e5;
+  background: #17384b;
+  color: #e2f3ff;
+}
+
+.dark .nutricion-aviso-card--informacion .nutricion-aviso-card__icono {
+  background: #245775;
+  color: #d8f0ff;
+}
+
+.dark .nutricion-aviso-card--informacion .nutricion-aviso-card__titulo,
+.dark .nutricion-aviso-card--informacion .nutricion-aviso-card__mensaje,
+.dark .nutricion-aviso-card--informacion .nutricion-aviso-card__sugerencia {
+  color: #e2f3ff;
+}
