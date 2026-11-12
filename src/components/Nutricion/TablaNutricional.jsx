@@ -7,9 +7,9 @@ const TablaNutricional = () => {
       
       <div className="bg-gradient-to-r from-emerald-50 via-white to-white px-8 py-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <p className="text-xs font-bold text-emerald-600 tracking-wider uppercase mb-1">Análisis Nutricional</p>
+          <p className="text-xs font-bold text-emerald-600 tracking-wider uppercase mb-1"></p>
           <h3 className="text-2xl font-poppins font-black text-gray-800 flex items-center gap-3 tracking-tight">
-            Galletas Integrales Sazón
+            Detalle Nutricional
           </h3>
           <p className="text-sm text-gray-500 mt-2 font-inter flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
