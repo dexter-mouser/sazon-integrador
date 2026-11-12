@@ -2,6 +2,7 @@
 // Cada persona trabaja solo dentro de su bloque numerado.
 import './nutricion.css'
 import NutricionPerfil from './NutricionPerfil'
+import NutricionPerfilFormulario from './NutricionPerfilFormulario'
 
 function Nutricion() {
   return (
@@ -35,6 +36,7 @@ function Nutricion() {
       <article id="nutricion-perfil">
         <h2>Perfil alimentario</h2>
         <NutricionPerfil />
+        <NutricionPerfilFormulario />
       </article>
       {/* Fin 3 */}
 

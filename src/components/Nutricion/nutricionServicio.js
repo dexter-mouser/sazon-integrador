@@ -41,6 +41,40 @@ async function actualizarPerfilAlimentario(idRestriccion, estaActivo) {
   sessionStorage.setItem(CLAVE_PERFIL, JSON.stringify(perfil))
   return structuredClone(restriccion)
 }
+
+const CLAVE_METAS = 'sazon-metas-nutricionales'
+
+export const LIMITES_METAS = {
+  caloriasMin: 1200,
+  caloriasMax: 4000,
+  sodioMin: 500,
+  sodioMax: 2300,
+  notasMax: 200,
+}
+
+// Valida las metas antes de guardarlas; lanza error si algo está fuera de rango
+function validarMetas(metas) {
+  const calorias = Number(metas.caloriasObjetivo)
+  const sodio = Number(metas.sodioMaximo)
+  const notas = String(metas.notas ?? '').trim()
+
+  if (!Number.isInteger(calorias) || calorias < LIMITES_METAS.caloriasMin || calorias > LIMITES_METAS.caloriasMax) {
+    throw new Error('Calorías objetivo fuera de rango')
+  }
+  if (!Number.isInteger(sodio) || sodio < LIMITES_METAS.sodioMin || sodio > LIMITES_METAS.sodioMax) {
+    throw new Error('Sodio máximo fuera de rango')
+  }
+  if (notas.length > LIMITES_METAS.notasMax) {
+    throw new Error('Notas demasiado largas')
+  }
+  return { caloriasObjetivo: calorias, sodioMaximo: sodio, notas }
+}
+
+async function guardarMetasNutricionales(metas) {
+  const metasValidas = validarMetas(metas)
+  sessionStorage.setItem(CLAVE_METAS, JSON.stringify(metasValidas))
+  return metasValidas
+}
 /* Fin 3 */
 
 /* 4 - Jose David Correa Builes */
@@ -52,4 +86,5 @@ async function actualizarPerfilAlimentario(idRestriccion, estaActivo) {
 export const nutricionServicio = {
   obtenerPerfilAlimentario,
   actualizarPerfilAlimentario,
+  guardarMetasNutricionales,
 }
