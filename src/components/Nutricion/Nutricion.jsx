@@ -4,9 +4,9 @@ import FiltrosRestriccion from './FiltrosRestriccion'
 import './nutricion.css'
 import NutricionPerfil from './NutricionPerfil'
 import NutricionPerfilFormulario from './NutricionPerfilFormulario'
-
+import NutricionAvisos from './NutricionAvisos'
 import NutricionSemaforo from "./NutricionSemaforo";
-import { datosNutricionalesEjemplo } from "./datosNutricionales";
+import { datosNutricionales } from "./datosNutricionales";
 
 function Nutricion() {
   return (
@@ -31,8 +31,12 @@ function Nutricion() {
       <article id="nutricion-semaforo">
         <h2>Semáforo de aportes</h2>
         <NutricionSemaforo
-          plato={datosNutricionalesEjemplo.plato}
-          totales={datosNutricionalesEjemplo.totales}
+          plato={datosNutricionales.plato}
+          totales={datosNutricionales.totales}
+        />
+
+        <NutricionAvisos
+          avisos={datosNutricionales.avisos}
         />
       </article>
       {/* Fin 2 */}
