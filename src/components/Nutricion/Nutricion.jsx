@@ -22,11 +22,11 @@ function Nutricion() {
           HU 4.2.2 Panel de recomendaciones "Revisa" (feature/nutricion/G4-SEM-F02-recomendacion)
           HU 4.2.3 Sincronización con el perfil activo (feature/nutricion/G4-SEM-F03-sincronizar) */}
       <article id="nutricion-semaforo">
-        <h2>Semáforo de aportes</h2>
+        <h2>Semáforo de aplllllllllortes</h2>
       </article>
       {/* Fin 2 */}
 
-      {/* 3 - José Manuel Botero Giraldo: Perfil alimentario (chips de restricciones y dietas)
+      {/* 3 - José Manuel Botero Giraldo :D: Perfil alimentario (chips de restricciones y dietas)
           HU 4.3.1 Chips del perfil alimentario (feature/nutricion/G4-PER-F01-chips)
           HU 4.3.2 Activar o desactivar restricciones (feature/nutricion/G4-PER-F02-interaccion)
           HU 4.3.3 Formulario de configuración avanzada (feature/nutricion/G4-PER-F03-formulario) */}
