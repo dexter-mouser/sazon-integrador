@@ -8,6 +8,7 @@ import NutricionPerfilFormulario from './NutricionPerfilFormulario'
 import NutricionAvisos from './NutricionAvisos'
 import NutricionSemaforo from "./NutricionSemaforo";
 import { datosNutricionales } from "./datosNutricionales";
+import NutricionMetas from './NutricionMetas'
 
 function Nutricion() {
   return (
@@ -70,6 +71,7 @@ function Nutricion() {
           HU 4.5.3 Validación integral del módulo (feature/nutricion/G4-MET-F03-validacion) */}
       <article id="nutricion-metas">
         <h2>Metas diarias</h2>
+        <NutricionMetas />
       </article>
       {/* Fin 5 */}
     </section>
