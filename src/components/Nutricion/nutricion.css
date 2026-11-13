@@ -146,4 +146,305 @@
 
 /* 5 - José David Valencia Martínez: Metas diarias (.nutricion-meta-*) */
 
+/* --- Colores registrados: permite que cambien con transición suave
+       al pasar de un estado a otro o al cambiar de tema --- */
+@property --nutricion-meta-fondo { syntax: '<color>'; inherits: true; initial-value: #ffffff; }
+@property --nutricion-meta-superficie { syntax: '<color>'; inherits: true; initial-value: #F4F4E8; }
+@property --nutricion-meta-borde { syntax: '<color>'; inherits: true; initial-value: #DAD9C4; }
+@property --nutricion-meta-pista { syntax: '<color>'; inherits: true; initial-value: #DAD9C4; }
+@property --nutricion-meta-texto { syntax: '<color>'; inherits: true; initial-value: #3F4040; }
+@property --nutricion-meta-texto-suave { syntax: '<color>'; inherits: true; initial-value: #5B5E60; }
+@property --nutricion-meta-titulo { syntax: '<color>'; inherits: true; initial-value: #215B33; }
+@property --nutricion-meta-marca { syntax: '<color>'; inherits: true; initial-value: #3D8E33; }
+@property --nutricion-meta-acento-inicio { syntax: '<color>'; inherits: true; initial-value: #7FBA00; }
+@property --nutricion-meta-acento { syntax: '<color>'; inherits: true; initial-value: #3D8E33; }
+
+/* --- Paleta: modo claro (mismos colores de index.css: variables
+       --color-sazon-* y el borde claro #DAD9C4 del encabezado) --- */
+.nutricion-meta-panel {
+  --nutricion-meta-fondo: #ffffff;
+  --nutricion-meta-superficie: var(--color-sazon-marfil);
+  --nutricion-meta-borde: #DAD9C4;
+  --nutricion-meta-pista: #DAD9C4;
+  --nutricion-meta-texto: var(--color-sazon-texto);
+  --nutricion-meta-texto-suave: var(--color-sazon-texto2);
+  --nutricion-meta-titulo: var(--color-sazon-verdeHondo);
+  --nutricion-meta-marca: var(--color-sazon-verdeHoja);
+  /* Estado "en curso": la barra va de lima a verde hoja */
+  --nutricion-meta-acento-inicio: var(--color-sazon-hoja);
+  --nutricion-meta-acento: var(--color-sazon-verdeHoja);
+}
+
+/* --- Paleta: modo oscuro (tarjeta y superficies verdes de index.css,
+       bordes blancos translúcidos como en .dark #top-header) --- */
+.dark .nutricion-meta-panel {
+  --nutricion-meta-fondo: var(--color-sazon-verdeNutresaCard);
+  --nutricion-meta-superficie: var(--color-sazon-verdeNutresa);
+  --nutricion-meta-borde: rgba(255, 255, 255, 0.15);
+  --nutricion-meta-pista: rgba(255, 255, 255, 0.15);
+  --nutricion-meta-texto: var(--color-sazon-marfil);
+  --nutricion-meta-texto-suave: color-mix(in srgb, var(--color-sazon-marfil) 80%, transparent);
+  --nutricion-meta-titulo: var(--color-sazon-marfil);
+  --nutricion-meta-marca: var(--color-sazon-verdeNeon);
+  --nutricion-meta-acento-inicio: var(--color-sazon-verdeHoja);
+  --nutricion-meta-acento: var(--color-sazon-verdeNeon);
+}
+
+/* --- Estados: cada uno arranca donde termina el anterior
+       (lima → verde → naranja → rojo) --- */
+.nutricion-meta-panel--cumplida {
+  --nutricion-meta-acento-inicio: var(--color-sazon-verdeHoja);
+  --nutricion-meta-acento: var(--color-sazon-verdeHondo);
+}
+
+.nutricion-meta-panel--cerca {
+  --nutricion-meta-acento-inicio: var(--color-sazon-hoja);
+  --nutricion-meta-acento: var(--color-sazon-brandDoria);
+}
+
+.nutricion-meta-panel--excedida,
+.nutricion-meta-panel--error {
+  --nutricion-meta-acento-inicio: var(--color-sazon-brandDoria);
+  --nutricion-meta-acento: var(--color-sazon-brandZenu);
+}
+
+/* En oscuro, naranja y rojo de marca se aclaran con marfil para que se lean */
+.dark .nutricion-meta-panel--cumplida {
+  --nutricion-meta-acento-inicio: var(--color-sazon-hoja);
+  --nutricion-meta-acento: var(--color-sazon-verdeNeon);
+}
+
+.dark .nutricion-meta-panel--cerca {
+  --nutricion-meta-acento-inicio: var(--color-sazon-verdeNeon);
+  --nutricion-meta-acento: color-mix(in srgb, var(--color-sazon-brandDoria) 65%, var(--color-sazon-marfil));
+}
+
+.dark .nutricion-meta-panel--excedida,
+.dark .nutricion-meta-panel--error {
+  --nutricion-meta-acento-inicio: color-mix(in srgb, var(--color-sazon-brandDoria) 65%, var(--color-sazon-marfil));
+  --nutricion-meta-acento: color-mix(in srgb, var(--color-sazon-brandZenu) 60%, var(--color-sazon-marfil));
+}
+
+/* --- Panel --- */
+.nutricion-meta-panel {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 42rem;
+  margin: 1rem 0 0;
+  padding: 1.25rem;
+  border: 1px solid var(--nutricion-meta-borde);
+  border-radius: 1rem;
+  background: var(--nutricion-meta-fondo);
+  color: var(--nutricion-meta-texto);
+  /* Tema: 0.3s como el resto del sitio. Estado: 0.6s, al ritmo de la barra */
+  transition:
+    --nutricion-meta-fondo 0.3s ease,
+    --nutricion-meta-superficie 0.3s ease,
+    --nutricion-meta-borde 0.3s ease,
+    --nutricion-meta-pista 0.3s ease,
+    --nutricion-meta-texto 0.3s ease,
+    --nutricion-meta-texto-suave 0.3s ease,
+    --nutricion-meta-titulo 0.3s ease,
+    --nutricion-meta-marca 0.3s ease,
+    --nutricion-meta-acento-inicio 0.6s ease,
+    --nutricion-meta-acento 0.6s ease;
+}
+
+/* --- Resumen de meta y consumo (HU 4.5.1) --- */
+.nutricion-meta-resumen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.nutricion-meta-dato {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: var(--nutricion-meta-superficie);
+}
+
+.nutricion-meta-dato dt {
+  font-size: 0.8rem;
+  color: var(--nutricion-meta-texto-suave);
+}
+
+.nutricion-meta-dato dd {
+  margin: 0.15rem 0 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--nutricion-meta-titulo);
+}
+
+.nutricion-meta-dato--excedido dd {
+  color: var(--nutricion-meta-acento);
+}
+
+.nutricion-meta-unidad {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--nutricion-meta-texto-suave);
+}
+
+/* --- Barra de progreso (HU 4.5.2) --- */
+.nutricion-meta-barra {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.nutricion-meta-barra-encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.nutricion-meta-barra-estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.nutricion-meta-barra-punto {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  background: var(--nutricion-meta-acento);
+}
+
+.nutricion-meta-barra-pista {
+  height: 0.9rem;
+  border-radius: 999px;
+  background: var(--nutricion-meta-pista);
+  overflow: hidden;
+}
+
+.nutricion-meta-barra-relleno {
+  height: 100%;
+  min-width: 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--nutricion-meta-acento-inicio),
+    var(--nutricion-meta-acento)
+  );
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nutricion-meta-barra-escala {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--nutricion-meta-texto-suave);
+}
+
+/* --- Avisos y validación (HU 4.5.3) --- */
+.nutricion-meta-aviso {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border-left: 4px solid var(--nutricion-meta-acento);
+  border-radius: 0.5rem;
+  /* Tinte suave del color del estado sobre la superficie */
+  background: color-mix(in srgb, var(--nutricion-meta-acento) 10%, var(--nutricion-meta-superficie));
+  font-size: 0.875rem;
+}
+
+/* --- Consumo del día --- */
+.nutricion-meta-subtitulo {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--nutricion-meta-titulo);
+}
+
+.nutricion-meta-comidas {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nutricion-meta-comida {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--nutricion-meta-borde);
+  font-size: 0.875rem;
+}
+
+.nutricion-meta-comida:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.nutricion-meta-comida-detalle {
+  display: block;
+  color: var(--nutricion-meta-texto-suave);
+}
+
+.nutricion-meta-comida-calorias {
+  flex-shrink: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Pie y botón --- */
+.nutricion-meta-pie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nutricion-meta-nota {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--nutricion-meta-texto-suave);
+}
+
+.nutricion-meta-boton {
+  justify-self: start;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--nutricion-meta-marca);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--nutricion-meta-titulo);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease-out;
+}
+
+.nutricion-meta-boton:hover {
+  background: var(--nutricion-meta-superficie);
+}
+
+.nutricion-meta-boton:active {
+  transform: scale(0.97);
+}
+
+.nutricion-meta-boton:focus-visible {
+  outline: 2px solid var(--color-sazon-verdeNeon);
+  outline-offset: 2px;
+}
+
+.nutricion-meta-boton:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nutricion-meta-panel,
+  .nutricion-meta-barra-relleno,
+  .nutricion-meta-boton {
+    transition: none;
+  }
+}
+
 /* Fin 5 */
