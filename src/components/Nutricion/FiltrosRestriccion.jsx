@@ -14,6 +14,7 @@ function FiltrosRestriccion() {
   const [activos, setActivos] = useState([])
   const [recetas, setRecetas] = useState([])
   const [cargando, setCargando] = useState(true)
+  const [perfil, setPerfil] = useState([])
 
   function alternar(nombre) {
     if (activos.includes(nombre)) {
@@ -27,9 +28,12 @@ function FiltrosRestriccion() {
     async function cargarRecetas() {
       try {
         const resultado = await nutricionServicio.obtenerRecetasPorRestricciones(activos)
+        const restriccionesPerfil = await nutricionServicio.obtenerPerfilAlimentario()
         setRecetas(resultado)
+        setPerfil(restriccionesPerfil.filter((item) => item.estaActivo))
       } catch {
         setRecetas([])
+        setPerfil([])
       }
       setCargando(false)
     }
@@ -73,22 +77,36 @@ function FiltrosRestriccion() {
         </p>
       ) : (
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {recetas.map((receta) => (
-            <li
-              key={receta.id}
-              className="nutricion-filtro-receta p-4 rounded-2xl border bg-white border-slate-400 in-[.dark]:bg-sazon-verdeNutresaCard in-[.dark]:border-white/40"
-            >
-              <h3 className="font-bold text-slate-900 in-[.dark]:text-white">
-                {receta.nombre}
-              </h3>
-              <p className="text-sm text-slate-700 in-[.dark]:text-white">
-                {receta.descripcion}
-              </p>
-              <p className="text-xs text-slate-600 in-[.dark]:text-sazon-verdeNeon">
-                {receta.restricciones.join(' · ')}
-              </p>
-            </li>
-          ))}
+          {recetas.map((receta) => {
+            const advertencias = perfil.filter(
+              (item) => !receta.restricciones.includes(item.nombre)
+            )
+
+            return (
+              <li
+                key={receta.id}
+                className="nutricion-filtro-receta p-4 rounded-2xl border bg-white border-slate-400 in-[.dark]:bg-sazon-verdeNutresaCard in-[.dark]:border-white/40"
+              >
+                <h3 className="font-bold text-slate-900 in-[.dark]:text-white">
+                  {receta.nombre}
+                </h3>
+                <p className="text-sm text-slate-700 in-[.dark]:text-white">
+                  {receta.descripcion}
+                </p>
+                <p className="text-xs text-slate-600 in-[.dark]:text-sazon-verdeNeon">
+                  {receta.restricciones.join(' · ')}
+                </p>
+                {advertencias.map((item) => (
+                  <p
+                    key={item.id}
+                    className="nutricion-filtro-advertencia inline-block mt-2 mr-2 px-2 py-1 rounded-full text-xs font-bold bg-sazon-brandZenu text-white"
+                  >
+                    ⚠ No apta para tu perfil: {item.nombre}
+                  </p>
+                ))}
+              </li>
+            )
+          })}
         </ul>
       )}
     </div>
