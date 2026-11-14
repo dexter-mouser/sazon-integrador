@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { nutricionServicio } from './nutricionServicio'
 
 const RESTRICCIONES = [
   'Sin lactosa',
@@ -11,6 +12,8 @@ const RESTRICCIONES = [
 
 function FiltrosRestriccion() {
   const [activos, setActivos] = useState([])
+  const [recetas, setRecetas] = useState([])
+  const [cargando, setCargando] = useState(true)
 
   function alternar(nombre) {
     if (activos.includes(nombre)) {
@@ -20,32 +23,74 @@ function FiltrosRestriccion() {
     }
   }
 
-  return (
-    <div
-      role="group"
-      aria-label="Filtros por restricción"
-      className="flex flex-wrap gap-2"
-    >
-      {RESTRICCIONES.map((nombre) => {
-        const activo = activos.includes(nombre)
+  useEffect(() => {
+    async function cargarRecetas() {
+      try {
+        const resultado = await nutricionServicio.obtenerRecetasPorRestricciones(activos)
+        setRecetas(resultado)
+      } catch {
+        setRecetas([])
+      }
+      setCargando(false)
+    }
+    cargarRecetas()
+  }, [activos])
 
-        return (
-          <button
-            key={nombre}
-            type="button"
-            aria-pressed={activo}
-            onClick={() => alternar(nombre)}
-            className={
-              activo
-                ? 'nutricion-filtro-btn px-4 py-2 rounded-full border cursor-pointer bg-sazon-verdeHondo border-sazon-verdeHondo text-white in-[.dark]:bg-sazon-verdeNeon in-[.dark]:border-sazon-verdeNeon in-[.dark]:text-sazon-verdeNoche'
-                : 'nutricion-filtro-btn px-4 py-2 rounded-full border cursor-pointer bg-white border-slate-400 text-slate-700 in-[.dark]:bg-sazon-verdeNutresaCard in-[.dark]:border-white/40 in-[.dark]:text-white'
-            }
-          >
-            {activo ? '✓ ' : ''}
-            {nombre}
-          </button>
-        )
-      })}
+  return (
+    <div className="space-y-4">
+      <div
+        role="group"
+        aria-label="Filtros por restricción"
+        className="flex flex-wrap gap-2"
+      >
+        {RESTRICCIONES.map((nombre) => {
+          const activo = activos.includes(nombre)
+
+          return (
+            <button
+              key={nombre}
+              type="button"
+              aria-pressed={activo}
+              onClick={() => alternar(nombre)}
+              className={
+                activo
+                  ? 'nutricion-filtro-btn px-4 py-2 rounded-full border cursor-pointer bg-sazon-verdeHondo border-sazon-verdeHondo text-white in-[.dark]:bg-sazon-verdeNeon in-[.dark]:border-sazon-verdeNeon in-[.dark]:text-sazon-verdeNoche'
+                  : 'nutricion-filtro-btn px-4 py-2 rounded-full border cursor-pointer bg-white border-slate-400 text-slate-700 in-[.dark]:bg-sazon-verdeNutresaCard in-[.dark]:border-white/40 in-[.dark]:text-white'
+              }
+            >
+              {activo ? '✓ ' : ''}
+              {nombre}
+            </button>
+          )
+        })}
+      </div>
+      {!cargando && recetas.length === 0 ? (
+        <p
+          role="alert"
+          className="nutricion-filtro-vacio p-4 rounded-2xl border bg-white border-slate-400 text-slate-700 in-[.dark]:bg-sazon-verdeNutresaCard in-[.dark]:border-white/40 in-[.dark]:text-white"
+        >
+          Ninguna receta cumple con todos los filtros que elegiste. Prueba quitando alguno.
+        </p>
+      ) : (
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {recetas.map((receta) => (
+            <li
+              key={receta.id}
+              className="nutricion-filtro-receta p-4 rounded-2xl border bg-white border-slate-400 in-[.dark]:bg-sazon-verdeNutresaCard in-[.dark]:border-white/40"
+            >
+              <h3 className="font-bold text-slate-900 in-[.dark]:text-white">
+                {receta.nombre}
+              </h3>
+              <p className="text-sm text-slate-700 in-[.dark]:text-white">
+                {receta.descripcion}
+              </p>
+              <p className="text-xs text-slate-600 in-[.dark]:text-sazon-verdeNeon">
+                {receta.restricciones.join(' · ')}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

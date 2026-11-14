@@ -78,6 +78,62 @@ async function guardarMetasNutricionales(metas) {
 /* Fin 3 */
 
 /* 4 - Jose David Correa Builes */
+const recetas = [
+  {
+    id: 1,
+    nombre: 'Ajiaco con pollo y mazorca',
+    descripcion: 'Sopa de papa criolla con pollo desmechado y guascas.',
+    restricciones: ['Sin gluten', 'Sin lactosa', 'Bajo en azúcar'],
+  },
+  {
+    id: 2,
+    nombre: 'Pasta Doria con vegetales salteados',
+    descripcion: 'Espaguetis con zucchini, pimentón y aceite de oliva.',
+    restricciones: ['Vegetariano', 'Vegano', 'Sin lactosa', 'Bajo en sodio', 'Bajo en azúcar'],
+  },
+  {
+    id: 3,
+    nombre: 'Arepa con queso y salchicha Zenú',
+    descripcion: 'Arepa de maíz asada, rellena de queso y salchicha.',
+    restricciones: ['Sin gluten', 'Bajo en azúcar'],
+  },
+  {
+    id: 4,
+    nombre: 'Ensalada de quinua y aguacate',
+    descripcion: 'Quinua con aguacate, tomate y aceitunas.',
+    restricciones: ['Sin gluten', 'Sin lactosa', 'Vegetariano', 'Vegano', 'Bajo en azúcar'],
+  },
+  {
+    id: 5,
+    nombre: 'Sándwich de jamón Pietrán',
+    descripcion: 'Pan integral con jamón de pavo, lechuga y tomate.',
+    restricciones: ['Sin lactosa', 'Bajo en azúcar'],
+  },
+  {
+    id: 6,
+    nombre: 'Chocolate Corona con leche',
+    descripcion: 'Chocolate de mesa batido en leche caliente.',
+    restricciones: ['Vegetariano', 'Sin gluten'],
+  },
+  {
+    id: 7,
+    nombre: 'Lentejas caseras con arroz',
+    descripcion: 'Lentejas guisadas con hogao, acompañadas de arroz blanco.',
+    restricciones: ['Sin gluten', 'Sin lactosa', 'Vegetariano', 'Vegano'],
+  },
+  {
+    id: 8,
+    nombre: 'Galletas Noel de avena con fruta',
+    descripcion: 'Galletas de avena servidas con banano y fresas.',
+    restricciones: ['Vegetariano', 'Bajo en sodio'],
+  },
+]
+
+async function obtenerRecetasPorRestricciones(restricciones) {
+  return recetas.filter((receta) =>
+    restricciones.every((restriccion) => receta.restricciones.includes(restriccion))
+  )
+}
 /* Fin 4 */
 
 /* 5 - José David Valencia Martínez */
@@ -165,4 +221,5 @@ export const nutricionServicio = {
   actualizarPerfilAlimentario,
   guardarMetasNutricionales,
   obtenerResumenMetaDiaria,
+  obtenerRecetasPorRestricciones,
 }
