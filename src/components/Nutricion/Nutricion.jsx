@@ -1,19 +1,19 @@
-import TablaNutricional from './TablaNutricional';
 // Página Nutrición y Perfiles (Célula 4)
 // Cada persona trabaja solo dentro de su bloque numerado.
-import FiltrosRestriccion from './FiltrosRestriccion'
 import './nutricion.css'
+import TablaNutricional from './TablaNutricional'
+import FiltrosRestriccion from './FiltrosRestriccion'
 import NutricionPerfil from './NutricionPerfil'
 import NutricionPerfilFormulario from './NutricionPerfilFormulario'
 import NutricionAvisos from './NutricionAvisos'
-import NutricionSemaforo from "./NutricionSemaforo";
-import { datosNutricionales } from "./datosNutricionales";
+import NutricionSemaforo from './NutricionSemaforo'
+import { datosNutricionales } from './datosNutricionales'
 import NutricionMetas from './NutricionMetas'
 
 function Nutricion() {
   return (
-    <section className="space-y-8">
-      <h1 className="font-poppins font-black text-2xl sm:text-4xl tracking-tight m-0">
+    <section className="nutricion-pagina space-y-8">
+      <h1 className="nutricion-titulo font-poppins font-black tracking-tight m-0">
         Nutrición y Perfiles
       </h1>
 

@@ -2,11 +2,174 @@
 /* Cada persona escribe solo dentro de su sección, con clases .nutricion-* */
 /* y colores de las variables --color-sazon-* definidas en index.css. */
 
+/* General: contenedor, títulos y colores de la página en modo claro */
+.nutricion-pagina {
+  --nutricion-superficie: var(--color-sazon-marfil);
+  --nutricion-tarjeta: white;
+  --nutricion-borde: color-mix(in srgb, var(--color-sazon-verdeHoja) 35%, white);
+  --nutricion-borde-campo: var(--color-sazon-texto2);
+  --nutricion-texto: var(--color-sazon-texto);
+  --nutricion-texto-suave: var(--color-sazon-texto2);
+  --nutricion-titulo: var(--color-sazon-verdeNutresa);
+  --nutricion-acento: var(--color-sazon-verdeHoja);
+  --nutricion-acento-texto: var(--color-sazon-verdeHondo);
+  --nutricion-foco: var(--color-sazon-verdeHondo);
+  --nutricion-boton: var(--color-sazon-verdeHondo);
+  --nutricion-boton-hover: var(--color-sazon-verdeNoche);
+  --nutricion-boton-texto: var(--color-sazon-marfil);
+  --nutricion-error: var(--color-sazon-brandZenu);
+
+  min-width: 320px;
+  max-width: 1200px;
+  margin-inline: auto;
+  color: var(--nutricion-texto);
+}
+
+/* General: colores de la página en modo oscuro */
+.dark .nutricion-pagina {
+  --nutricion-superficie: var(--color-sazon-verdeNutresaCard);
+  --nutricion-tarjeta: var(--color-sazon-verdeNutresa);
+  --nutricion-borde: color-mix(in srgb, var(--color-sazon-verdeHoja) 55%, transparent);
+  --nutricion-borde-campo: color-mix(in srgb, var(--color-sazon-marfil) 45%, transparent);
+  --nutricion-texto: var(--color-sazon-marfil);
+  --nutricion-texto-suave: color-mix(in srgb, var(--color-sazon-marfil) 80%, var(--color-sazon-verdeNutresa));
+  --nutricion-titulo: var(--color-sazon-marfil);
+  --nutricion-acento: var(--color-sazon-verdeNeon);
+  --nutricion-acento-texto: var(--color-sazon-verdeNeon);
+  --nutricion-foco: var(--color-sazon-verdeNeon);
+  --nutricion-boton: var(--color-sazon-verdeNeon);
+  --nutricion-boton-hover: color-mix(in srgb, var(--color-sazon-verdeNeon) 80%, white);
+  --nutricion-boton-texto: var(--color-sazon-verdeNoche);
+  --nutricion-error: color-mix(in srgb, var(--color-sazon-brandZenu) 45%, white);
+
+  color-scheme: dark;
+}
+
+.nutricion-titulo {
+  font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+  color: var(--nutricion-titulo);
+}
+
+.nutricion-pagina article > h2 {
+  margin: 0 0 1rem;
+  font-family: var(--font-poppins);
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--nutricion-titulo);
+}
+
 /* 1 - Santiago Padilla: Tabla nutricional (.nutricion-tabla) */
 
 /* Fin 1 */
 
 /* 2 - Juan Camilo Valencia Estrada: Semáforo y avisos (.nutricion-semaforo-*, .nutricion-aviso-card) */
+
+/* ================================
+   MODO CLARO
+================================ */
+
+.nutricion-semaforo {
+  --semaforo-ok: var(--color-sazon-verdeHoja);
+  --semaforo-ok-texto: var(--color-sazon-verdeHondo);
+  --semaforo-alerta: var(--color-sazon-brandDoria);
+  --semaforo-alerta-texto: color-mix(in srgb, var(--color-sazon-brandDoria) 65%, black);
+
+  padding: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+  color: var(--nutricion-texto);
+  background: var(--nutricion-superficie);
+  border: 1px solid var(--nutricion-borde);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px color-mix(in srgb, black 8%, transparent);
+}
+
+.nutricion-semaforo__etiqueta {
+  color: var(--nutricion-acento-texto);
+}
+
+.nutricion-semaforo__encabezado {
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+  color: var(--nutricion-titulo);
+}
+
+.nutricion-semaforo__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nutricion-semaforo__indicador {
+  background: var(--nutricion-tarjeta);
+  color: var(--nutricion-texto);
+  border: 1px solid var(--nutricion-borde);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.nutricion-semaforo-alerta {
+  border-left: 5px solid var(--semaforo-alerta);
+  background: color-mix(in srgb, var(--semaforo-alerta) 8%, var(--nutricion-tarjeta));
+}
+
+.nutricion-semaforo-ok {
+  border-left: 5px solid var(--semaforo-ok);
+  background: color-mix(in srgb, var(--semaforo-ok) 8%, var(--nutricion-tarjeta));
+}
+
+.nutricion-semaforo__estado {
+  color: var(--semaforo-alerta-texto);
+  font-weight: 700;
+}
+
+.nutricion-semaforo-ok .nutricion-semaforo__estado {
+  color: var(--semaforo-ok-texto);
+}
+
+.nutricion-semaforo__punto {
+  display: inline-block;
+  width: .7rem;
+  height: .7rem;
+  border-radius: 9999px;
+  margin-right: .45rem;
+  background: currentColor;
+}
+
+.nutricion-semaforo-alerta .nutricion-semaforo__punto {
+  background: var(--semaforo-alerta);
+}
+
+.nutricion-semaforo-ok .nutricion-semaforo__punto {
+  background: var(--semaforo-ok);
+}
+
+.nutricion-semaforo__valor {
+  font-size: 1.5rem;
+}
+
+.nutricion-semaforo__umbrales {
+  border-top: 1px solid var(--nutricion-borde);
+}
+
+.nutricion-semaforo__ayuda {
+  color: var(--nutricion-texto-suave);
+}
+
+.nutricion-semaforo__aviso {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--nutricion-borde);
+  border-radius: 0.75rem;
+}
+
+/* ================================
+   MODO OSCURO
+================================ */
+
+.dark .nutricion-semaforo {
+  --semaforo-ok: var(--color-sazon-verdeNeon);
+  --semaforo-ok-texto: var(--color-sazon-verdeNeon);
+  --semaforo-alerta: color-mix(in srgb, var(--color-sazon-brandDoria) 60%, white);
+  --semaforo-alerta-texto: color-mix(in srgb, var(--color-sazon-brandDoria) 55%, white);
+}
 
 /* Fin 2 */
 
@@ -23,25 +186,30 @@
 .nutricion-perfil-chip {
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
-  border: 1px solid var(--color-sazon-verdeHoja);
+  border: 1px solid var(--nutricion-acento);
   background: transparent;
-  color: var(--color-sazon-verdeHondo);
+  color: var(--nutricion-acento-texto);
   font-size: 0.875rem;
   cursor: pointer;
 }
 
 .nutricion-perfil-chip:hover {
-  background: var(--color-sazon-marfil);
+  background: color-mix(in srgb, var(--nutricion-acento) 15%, transparent);
 }
 
 .nutricion-perfil-chip:focus-visible {
-  outline: 2px solid var(--color-sazon-verdeNeon);
+  outline: 2px solid var(--nutricion-foco);
   outline-offset: 2px;
 }
 
 .nutricion-perfil-chip--activo {
-  background: var(--color-sazon-verdeHoja);
-  color: var(--color-sazon-marfil);
+  border-color: var(--nutricion-boton);
+  background: var(--nutricion-boton);
+  color: var(--nutricion-boton-texto);
+}
+
+.nutricion-perfil-chip--activo:hover {
+  background: var(--nutricion-boton-hover);
 }
 
 .nutricion-perfil-chip:active {
@@ -64,37 +232,51 @@
   display: grid;
   gap: 0.4rem;
   padding: 1rem;
-  border: 1px solid var(--color-sazon-verdeHoja);
+  border: 1px solid var(--nutricion-borde);
   border-radius: 0.75rem;
 }
 
 .nutricion-perfil-form-grupo legend {
   padding: 0 0.4rem;
   font-weight: 600;
-  color: var(--color-sazon-verdeHondo);
+  color: var(--nutricion-titulo);
 }
 
 .nutricion-perfil-form-grupo label {
   font-size: 0.875rem;
-  color: var(--color-sazon-texto);
+  color: var(--nutricion-texto);
 }
 
 .nutricion-perfil-form-grupo input,
 .nutricion-perfil-form-grupo textarea {
   padding: 0.5rem 0.75rem;
-  border: 1px solid var(--color-sazon-texto2);
+  border: 1px solid var(--nutricion-borde-campo);
   border-radius: 0.5rem;
+  background: var(--nutricion-tarjeta);
+  color: var(--nutricion-texto);
   font: inherit;
+}
+
+.nutricion-perfil-form-grupo input:hover,
+.nutricion-perfil-form-grupo textarea:hover {
+  border-color: var(--nutricion-acento);
 }
 
 .nutricion-perfil-form-grupo input:focus-visible,
 .nutricion-perfil-form-grupo textarea:focus-visible {
-  outline: 2px solid var(--color-sazon-verdeNeon);
+  outline: 2px solid var(--nutricion-foco);
   outline-offset: 1px;
 }
 
-.nutricion-perfil-form-grupo input:invalid {
-  border-color: var(--color-sazon-brandZenu);
+.nutricion-perfil-form-grupo input:disabled,
+.nutricion-perfil-form-grupo textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* El error se marca solo después de que la persona edita el campo */
+.nutricion-perfil-form-grupo input:user-invalid {
+  border-color: var(--nutricion-error);
 }
 
 .nutricion-perfil-form-boton {
@@ -102,19 +284,23 @@
   padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 999px;
-  background: var(--color-sazon-verdeHoja);
-  color: var(--color-sazon-marfil);
+  background: var(--nutricion-boton);
+  color: var(--nutricion-boton-texto);
   font-weight: 600;
   cursor: pointer;
 }
 
 .nutricion-perfil-form-boton:hover {
-  background: var(--color-sazon-verdeHondo);
+  background: var(--nutricion-boton-hover);
 }
 
 .nutricion-perfil-form-boton:focus-visible {
-  outline: 2px solid var(--color-sazon-verdeNeon);
+  outline: 2px solid var(--nutricion-foco);
   outline-offset: 2px;
+}
+
+.nutricion-perfil-form-boton:active {
+  transform: scale(0.97);
 }
 
 .nutricion-perfil-form-boton:disabled {
@@ -126,16 +312,15 @@
   margin: 0;
   padding: 0.6rem 0.9rem;
   border-radius: 0.5rem;
+  background: var(--nutricion-superficie);
 }
 
 .nutricion-perfil-aviso--exito {
-  background: var(--color-sazon-marfil);
-  color: var(--color-sazon-verdeHondo);
+  color: var(--nutricion-acento-texto);
 }
 
 .nutricion-perfil-aviso--error {
-  background: var(--color-sazon-marfil);
-  color: var(--color-sazon-brandZenu);
+  color: var(--nutricion-error);
 }
 
 /* Fin 3 */

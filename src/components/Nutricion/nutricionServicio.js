@@ -52,6 +52,9 @@ export const LIMITES_METAS = {
   notasMax: 200,
 }
 
+// Valores con los que arranca el formulario de metas
+export const METAS_INICIALES = { caloriasObjetivo: 2000, sodioMaximo: 1500, notas: '' }
+
 // Valida las metas antes de guardarlas; lanza error si algo está fuera de rango
 function validarMetas(metas) {
   const calorias = Number(metas.caloriasObjetivo)

@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { nutricionServicio, LIMITES_METAS } from './nutricionServicio'
-
-const METAS_INICIALES = { caloriasObjetivo: 2000, sodioMaximo: 1500, notas: '' }
+import { nutricionServicio, LIMITES_METAS, METAS_INICIALES } from './nutricionServicio'
 
 // Formulario de metas nutricionales y restricciones detalladas (HU 4.3.3)
 function NutricionPerfilFormulario() {
