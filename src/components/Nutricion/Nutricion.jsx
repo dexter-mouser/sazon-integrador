@@ -5,8 +5,7 @@ import TablaNutricional from './TablaNutricional'
 import FiltrosRestriccion from './FiltrosRestriccion'
 import NutricionPerfil from './NutricionPerfil'
 import NutricionPerfilFormulario from './NutricionPerfilFormulario'
-import NutricionAvisos from './NutricionAvisos'
-import NutricionSemaforo from './NutricionSemaforo'
+import NutricionSemaforoSincronizado from './NutricionSemaforoSincronizado'
 import { datosNutricionales } from './datosNutricionales'
 import NutricionMetas from './NutricionMetas'
 
@@ -33,13 +32,10 @@ function Nutricion() {
           HU 4.2.3 Sincronización con el perfil activo (feature/nutricion/G4-SEM-F03-sincronizar) */}
       <article id="nutricion-semaforo">
         <h2>Semáforo de aportes</h2>
-        <NutricionSemaforo
+        <NutricionSemaforoSincronizado
           plato={datosNutricionales.plato}
           totales={datosNutricionales.totales}
-        />
-
-        <NutricionAvisos
-          avisos={datosNutricionales.avisos}
+          avisosIniciales={datosNutricionales.avisos}
         />
       </article>
       {/* Fin 2 */}
