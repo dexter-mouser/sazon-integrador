@@ -23,7 +23,7 @@ function FiltrosRestriccion() {
       setActivos([...activos, nombre])
     }
   }
-
+5
   useEffect(() => {
     async function cargarRecetas() {
       try {
