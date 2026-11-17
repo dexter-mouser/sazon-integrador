@@ -5,6 +5,209 @@
 /* Fin 1 */
 
 /* 2 - Juan Camilo Valencia Estrada */
+// HU 4.2.3 - Sincronización de alertas con el perfil activo
+// Todo es simulado: el perfil vive en sessionStorage y la receta en datosNutricionales.js
+
+// Nombre del evento que se lanza cuando el perfil o las metas cambian
+export const EVENTO_PERFIL_ACTUALIZADO = 'sazon:perfil-alimentario-actualizado'
+
+const SODIO_MAXIMO_POR_DEFECTO = 1500 // mg por día, si el usuario no guardó sus metas
+const COMIDAS_POR_DIA = 3
+const ESPERA_SIMULADA_MS = 150 // simula el tiempo de una petición a un servidor
+
+// Qué lleva un ingrediente que choca con cada restricción del perfil
+const ETIQUETA_POR_RESTRICCION = {
+  'Sin lactosa': 'lactosa',
+  'Sin gluten': 'gluten',
+  'Vegetariano': 'carne',
+}
+
+// Espera unos milisegundos (para simular una petición)
+function esperar(milisegundos) {
+  return new Promise((resolver) => setTimeout(resolver, milisegundos))
+}
+
+// Lanza el evento para avisar que el perfil cambió. Nunca rompe el guardado.
+function avisarCambioDePerfil(origen) {
+  try {
+    window.dispatchEvent(new CustomEvent(EVENTO_PERFIL_ACTUALIZADO, { detail: { origen } }))
+  } catch (error) {
+    console.error('No se pudo avisar el cambio de perfil:', error)
+  }
+}
+
+// Guarda una restricción (función de la sección 3) y luego avisa
+async function actualizarPerfilYAvisar(idRestriccion, estaActivo) {
+  const restriccion = await actualizarPerfilAlimentario(idRestriccion, estaActivo)
+  avisarCambioDePerfil('restricciones')
+  return restriccion
+}
+
+// Guarda las metas (función de la sección 3) y luego avisa
+async function guardarMetasYAvisar(metas) {
+  const metasGuardadas = await guardarMetasNutricionales(metas)
+  avisarCambioDePerfil('metas')
+  return metasGuardadas
+}
+
+// Lee el sodio máximo guardado; si no hay, usa el valor por defecto
+function leerSodioMaximo() {
+  try {
+    const metas = JSON.parse(sessionStorage.getItem(CLAVE_METAS))
+    const sodio = Number(metas?.sodioMaximo)
+    if (Number.isFinite(sodio) && sodio > 0) {
+      return sodio
+    }
+  } catch (error) {
+    console.error('No se pudieron leer las metas guardadas:', error)
+  }
+  return SODIO_MAXIMO_POR_DEFECTO
+}
+
+// Con "Bajo en sodio" activo, el límite de sodio baja a la meta de una comida
+function ajustarReglas(reglasOriginales, bajoEnSodio, sodioMaximo) {
+  const reglas = structuredClone(reglasOriginales || {})
+
+  if (bajoEnSodio && reglas.sodio) {
+    const metaPorComida = Math.round(sodioMaximo / COMIDAS_POR_DIA)
+    reglas.sodio.alto = Math.min(reglas.sodio.alto, metaPorComida)
+    reglas.sodio.moderado = Math.round(reglas.sodio.alto * 0.8)
+  }
+
+  return reglas
+}
+
+// Dice si un valor es 'alto', 'moderado' o 'normal' según la regla
+function calcularNivel(valor, regla) {
+  if (!regla || !Number.isFinite(valor)) return 'normal'
+  if (valor >= regla.alto) return 'alto'
+  if (regla.moderado != null && valor >= regla.moderado) return 'moderado'
+  return 'normal'
+}
+
+function crearAvisoSodio(valor, regla, bajoEnSodio) {
+  const nivel = calcularNivel(valor, regla)
+
+  if (nivel === 'alto') {
+    return {
+      id: 'sodio-alto',
+      tipo: 'advertencia',
+      titulo: 'Revisa tu consumo de sodio',
+      mensaje: bajoEnSodio
+        ? 'Esta receta supera tu meta de sodio por comida.'
+        : 'Esta receta tiene un nivel alto de sodio.',
+      sugerencia: 'Reemplazar la Ranchera por su versión reducida en sodio.',
+    }
+  }
+
+  if (nivel === 'moderado') {
+    return {
+      id: 'sodio-moderado',
+      tipo: 'advertencia',
+      titulo: 'Cuida tu consumo de sodio',
+      mensaje: 'Esta receta ya alcanza el nivel moderado de sodio.',
+      sugerencia: 'Reduce la sal añadida o elige ingredientes bajos en sodio.',
+    }
+  }
+
+  return null
+}
+
+function crearAvisoGrasas(valor, regla) {
+  const nivel = calcularNivel(valor, regla)
+
+  if (nivel === 'alto') {
+    return {
+      id: 'grasas-alto',
+      tipo: 'advertencia',
+      titulo: 'Revisa tu consumo de grasas',
+      mensaje: 'Esta receta tiene un nivel alto de grasas.',
+      sugerencia: 'Prefiere preparaciones al horno o a la plancha.',
+    }
+  }
+
+  if (nivel === 'moderado') {
+    return {
+      id: 'grasas-moderado',
+      tipo: 'advertencia',
+      titulo: 'Cuida tu consumo de grasas',
+      mensaje: 'Esta receta ya alcanza el nivel moderado de grasas.',
+      sugerencia: 'Usa menos aceite o mantequilla al cocinar.',
+    }
+  }
+
+  return null
+}
+
+// Crea un aviso por cada restricción activa que choque con un ingrediente
+function crearAvisosDeRestricciones(restriccionesActivas, ingredientes) {
+  const avisos = []
+
+  for (const restriccion of restriccionesActivas) {
+    const etiqueta = ETIQUETA_POR_RESTRICCION[restriccion]
+    if (!etiqueta) continue // esta restricción no se valida con ingredientes
+
+    const conflictivos = ingredientes
+      .filter((ingrediente) => (ingrediente.contiene || []).includes(etiqueta))
+      .map((ingrediente) => ingrediente.nombre)
+
+    if (conflictivos.length > 0) {
+      avisos.push({
+        id: `restriccion-${etiqueta}`,
+        tipo: 'advertencia',
+        titulo: `Revisa tu perfil: ${restriccion}`,
+        mensaje: `Esta receta incluye ${conflictivos.join(', ')}, que no encaja con tu restricción "${restriccion}".`,
+        sugerencia: 'Busca una versión sin ese ingrediente o sustitúyelo.',
+      })
+    }
+  }
+
+  return avisos
+}
+
+// Calcula el semáforo y los avisos de un plato según el perfil activo.
+// Es async para que luego se pueda cambiar por una petición real a la API.
+async function analizarPlatoConPerfil(plato, totales) {
+  if (!plato || typeof plato !== 'object') {
+    throw new Error('Plato no válido para el análisis nutricional')
+  }
+  if (!totales || typeof totales !== 'object') {
+    throw new Error('Totales nutricionales no válidos')
+  }
+
+  await esperar(ESPERA_SIMULADA_MS)
+
+  // 1. Leer el perfil
+  const perfil = leerPerfilGuardado()
+  const restriccionesActivas = perfil.filter((item) => item.estaActivo).map((item) => item.nombre)
+  const bajoEnSodio = restriccionesActivas.includes('Bajo en sodio')
+  const sodioMaximo = leerSodioMaximo()
+
+  // 2. Ajustar las reglas del semáforo
+  const reglas = ajustarReglas(plato.reglasNutricionales, bajoEnSodio, sodioMaximo)
+
+  // 3. Crear los avisos
+  const avisos = [
+    crearAvisoSodio(Number(totales.sodio), reglas.sodio, bajoEnSodio),
+    crearAvisoGrasas(Number(totales.grasas), reglas.grasas),
+    ...crearAvisosDeRestricciones(restriccionesActivas, plato.ingredientes || []),
+  ].filter(Boolean) // quita los que son null
+
+  if (restriccionesActivas.length > 0) {
+    avisos.push({
+      id: 'perfil-activo',
+      tipo: 'informacion',
+      titulo: 'Perfil alimentario activo',
+      mensaje: `Tus restricciones activas: ${restriccionesActivas.join(', ')}.`,
+      sugerencia: 'Verifica los ingredientes antes de preparar la receta.',
+    })
+  }
+
+  // La firma sirve para saber si el resultado cambió respecto al anterior
+  const firma = JSON.stringify({ reglas, avisos })
+
+  return { reglas, avisos, firma }
+}
 /* Fin 2 */
 
 /* 3 - José Manuel Botero Giraldo */
@@ -52,7 +255,6 @@ export const LIMITES_METAS = {
   notasMax: 200,
 }
 
-// Valores con los que arranca el formulario de metas
 export const METAS_INICIALES = { caloriasObjetivo: 2000, sodioMaximo: 1500, notas: '' }
 
 // Valida las metas antes de guardarlas; lanza error si algo está fuera de rango
@@ -221,8 +423,9 @@ export function calcularProgresoCalorias(metaCalorias, caloriasConsumidas) {
 
 export const nutricionServicio = {
   obtenerPerfilAlimentario,
-  actualizarPerfilAlimentario,
-  guardarMetasNutricionales,
+  // Estas dos guardan y además avisan con un evento (HU 4.2.3)
+  actualizarPerfilAlimentario: actualizarPerfilYAvisar,
+  guardarMetasNutricionales: guardarMetasYAvisar,
   obtenerResumenMetaDiaria,
   obtenerRecetasPorRestricciones,
 }
